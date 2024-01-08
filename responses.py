@@ -1,6 +1,10 @@
-from db import Database
+"""Handle all messages sent to the Discord to perform an action and respond"""
 from datetime import date
-def handle_responses(message, text):
+from db import Database
+
+
+def handleResponses(message, text):
+    """Handle responses to messages sent to the Discord channel"""
     if text.startswith('!noted'):
         return handleNoted(message, text)
     if text.startswith('!register'):
@@ -9,11 +13,12 @@ def handle_responses(message, text):
         return "JUST !NOTE SOMETHING MAN"
     if text.startswith('!review'):
         return handlePlayerReview(text)
-    
-'''
-Noted takes the form of !noted <user> <event>. Tokenize the string and build a record to be inserted into the database.
-'''
+
+
 def handleNoted(message, text):
+    """
+    Noted takes the form of !noted <user> <event>. Tokenize string and build a record to be inserted into the database.
+    """
     tokens = text.split(" ")
     try:
         db = Database()
@@ -28,43 +33,43 @@ def handleNoted(message, text):
         }
         db.addNote(record)
         db.shutdownDb()
-        return str(f"Noted. {user} is clearly a luckerdog. \"{' '.join(note)}\"")
+        return str(f"Noted that {user} is a luckerdog. \"{' '.join(note)}\"")
     except Exception as e:
-        print("Unhandled: malformed use of !noted probably does not contain a note. " )
+        print("Malformed use of !noted probably does not contain a note.")
         print(e)
 
-'''
-Register one user with !register <user>
-'''
+
 def handleRegister(message):
+    """Register one user with !register <user>"""
     tokens = message.split(" ")
     try:
         db = Database()
         record = {"luckerdog": tokens[1]}
         db.registerUser(record)
         db.shutdownDb()
-        return str(f"Luckerdog has been registered.")
-    except Exception as e: 
+        return "Luckerdog has been registered."
+    except Exception:
         return str(f"{record['luckerdog']} is already registered or otherwise ineligible.")
-    
-'''
-Review a player's notes with !review <user>. Returns a list of notes in the form of:
-<index>. <event> - <ref url>
-'''
+
+
 def handlePlayerReview(message):
+    """
+    Review a player's notes with !review <user>. Returns a list of notes in the form of:
+    <index>. <event> - <ref url>
+    """
     tokens = message.split(" ")
     try:
         player = tokens[1]
         db = Database()
         collection = db.getNotes(player)
         strBuilder = ""
-        for idx, record in enumerate(collection): 
+        for idx, record in enumerate(collection):
             strBuilder += str(idx+1) + ". "
             strBuilder += record["event"] + " - " + record["link"]
             strBuilder += "\n"
         db.shutdownDb()
 
         return strBuilder
-    except Exception as e: 
+    except Exception as e:
         print("Unhandled: malformed use of !review. Probably does not contain a player")
         print(e)
