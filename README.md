@@ -1,19 +1,13 @@
-<<<<<<< HEAD
-# notetakerbot
-discord lucky person tracker
-=======
-## Main function: use noted command with the person's name to begin recording. Everything after the first hyphen will be recorded for future retrieval
+## Usage
 
-```
-Tokenize 3 parts:
-!noted - event
-name - the player that did something lucky
-xyz - the thing that was lucky
-```
+### Register
 
-!noted name - xyz
+!register <user>
 
-## Returns all recordings of the month
+### Note down user's lucky event
 
-!checknotes name
->>>>>>> b8d7cc2 (Create base functionality)
+!noted <user> <event>
+
+### List all user's lucky events
+
+!review <user>
