@@ -30,12 +30,12 @@ def run():
     client = discord.Client(intents=intents)
 
     @client.event
-    async def onReady():
+    async def on_ready():
         """Log connection on start"""
         print(f'{client.user} has connected to Discord!')
 
     @client.event
-    async def onMessage(message):
+    async def on_message(message):
         """Handle messages sent to the Discord channel"""
         if message.author == client.user:
             return

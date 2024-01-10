@@ -31,9 +31,9 @@ def handleNoted(message, text):
             "author": message.author.name,
             "link": message.jump_url
         }
-        db.addNote(record)
+        response = db.addNote(record)
         db.shutdownDb()
-        return str(f"Noted that {user} is a luckerdog. \"{' '.join(note)}\"")
+        return response
     except Exception as e:
         print("Malformed use of !noted probably does not contain a note.")
         print(e)
@@ -44,10 +44,10 @@ def handleRegister(message):
     tokens = message.split(" ")
     try:
         db = Database()
-        record = {"luckerdog": tokens[1]}
-        db.registerUser(record)
+        record = {"name": tokens[1]}
+        response = db.registerUser(record)
         db.shutdownDb()
-        return "Luckerdog has been registered."
+        return response
     except Exception:
         return str(f"{record['luckerdog']} is already registered or otherwise ineligible.")
 

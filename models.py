@@ -1,7 +1,7 @@
 import uuid
-from typing import Optional
-from pydantic import BaseModel, Field
+from pydantic import Field
 from datetime import date
+
 
 class Luckerdog:
     id: str = Field(default_factory=uuid.uuid4, alias="_id")
