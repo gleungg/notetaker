@@ -8,7 +8,7 @@ import models
 load_dotenv()
 
 ATLAS_URI = os.environ.get("ATLAS_URI")
-MONGODB_URI = os.environ.get("MONGODB_URI")
+MONGODB_URI = os.getenv("MONGODB_URI")
 DB_NAME = "Notes"
 
 

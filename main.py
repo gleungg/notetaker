@@ -7,9 +7,13 @@ import responses
 
 load_dotenv()
 
-CLIENT_ID = os.environ.get("CLIENT_ID")
-CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
-TOKEN = os.environ.get("TOKEN")
+isProd = os.getenv("PROD", "")
+
+CLIENT_ID = os.environ.get(
+    "CLIENT_ID") if isProd else os.getenv("CLIENT_ID_DEV")
+CLIENT_SECRET = os.environ.get(
+    "CLIENT_SECRET") if isProd else os.getenv("CLIENT_SECRET_DEV")
+TOKEN = os.environ.get("TOKEN") if isProd else os.getenv("TOKEN")
 
 
 async def sendMessage(message, text):
