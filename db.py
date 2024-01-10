@@ -52,7 +52,7 @@ class Database:
 
     def startupDbClient(self):
         """Connect to the database"""
-        client = MongoClient(ATLAS_URI)
+        client = MongoClient(ATLAS_URI or MONGODB_URI)
         return client
 
     def shutdownDb(self):
